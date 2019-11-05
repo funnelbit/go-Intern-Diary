@@ -2,13 +2,17 @@ package repository
 
 import (
 	"fmt"
+	//"../model"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 
 type Repository interface {
-	// ...
+	CreateNewUser(name string, passwordHash string) error
+	//FindUserById(*model.User, error)
+	//CreateNewToken(userID uint64, token string, expiresAt time.Time) error
+	//DeleteToken(userID uint64) error
 
 	Close() error
 }

@@ -12,6 +12,7 @@ func init() {
 }
 
 type DiaryApp interface {
+	CreateNewUser(name string, passwordHash string) error
 	Close() error
 }
 
