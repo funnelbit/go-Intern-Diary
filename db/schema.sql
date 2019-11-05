@@ -10,7 +10,7 @@ CREATE TABLE user (
   UNIQUE KEY (name),
 
   KEY (created_at),
-  KEY (updated_at),
+  KEY (updated_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE user_session (
@@ -18,6 +18,6 @@ CREATE TABLE user_session (
   `user_id` BIGINT UNSIGNED NOT NULL,
   `expred_at` BIGINT UNSIGNED NOT NULL,
 
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
