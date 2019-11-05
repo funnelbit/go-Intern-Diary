@@ -2,22 +2,37 @@
 
 
 [[projects]]
+  digest = "1:0deddd908b6b4b768cfc272c16ee61e7088a60f7fe2f06c547bd3d8e1f8b8e77"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = ""
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
+  digest = "1:24f3c3b071f87359bb8e6f970f0942785313581f302f0c3e8200bf806f25682c"
   name = "github.com/dimfeld/httptreemux"
   packages = ["."]
+  pruneopts = ""
   revision = "7f532489e7739b3d49df5c602bf63549881fe753"
 
 [[projects]]
+  digest = "1:44504a65da289479faa35c501602864403f0147e9f7159421f097f12b65d82f0"
   name = "github.com/go-sql-driver/mysql"
   packages = ["."]
+  pruneopts = ""
   revision = "64db0f7ebe171b596aa9b26f39a79f7413a3b617"
 
 [[projects]]
+  digest = "1:e0419edd44e362e2ab972a6f68c91a20adaa79ff24a6fd511055d1f0fcd93b79"
   name = "github.com/graph-gophers/dataloader"
   packages = ["."]
+  pruneopts = ""
   revision = "78139374585c29dcb97b8f33089ed11959e4be59"
   version = "v5"
 
 [[projects]]
+  digest = "1:8c5ab5aba624323d906079acd9669246951c6e2a4a5da782efbdaf332b82b0b7"
   name = "github.com/graph-gophers/graphql-go"
   packages = [
     ".",
@@ -33,54 +48,132 @@
     "introspection",
     "log",
     "relay",
-    "trace"
+    "trace",
   ]
+  pruneopts = ""
   revision = "e698b6abc17ead17ea89d3d22a4b2625299701e3"
 
 [[projects]]
+  branch = "master"
+  digest = "1:febe3e2cd92a5e2977772304d7bbc83bcd4e1ef84903633d1c1fad9c21a8be9d"
+  name = "github.com/hatena/go-Intern-Diary"
+  packages = [
+    "config",
+    "model",
+    "repository",
+    "service",
+    "web",
+  ]
+  pruneopts = ""
+  revision = "aabe08558ee4a101cf1759483d703e632b8fed18"
+
+[[projects]]
+  digest = "1:860e1118ccf3d852a848b510624521344c0d4d0f35026ae2438fa96a0ec28740"
   name = "github.com/jessevdk/go-assets"
   packages = ["."]
+  pruneopts = ""
   revision = "4f4301a06e153ff90e17793577ab6bf79f8dc5c5"
 
 [[projects]]
   branch = "master"
+  digest = "1:617ee2434b77e911fa26b678730be9a617f75243b194eadc8201c8ac860844aa"
   name = "github.com/jmoiron/sqlx"
   packages = [
     ".",
-    "reflectx"
+    "reflectx",
   ]
+  pruneopts = ""
   revision = "0dae4fefe7c0e190f7b5a78dac28a1c82cc8d849"
 
 [[projects]]
+  digest = "1:1b8a9fc38d01f3adb81bc640d57495d3d1bfedd95bd200d32fc8cb439dc5c94d"
   name = "github.com/justinas/nosurf"
   packages = ["."]
+  pruneopts = ""
   revision = "7182011986c42c33f0a79fd4b07e41edc784532b"
 
 [[projects]]
+  digest = "1:78fb99d6011c2ae6c72f3293a83951311147b12b06a5ffa43abf750c4fab6ac5"
   name = "github.com/opentracing/opentracing-go"
   packages = [
     ".",
     "ext",
-    "log"
+    "log",
   ]
+  pruneopts = ""
   revision = "1949ddbfd147afd4d964a9f00b24eb291e0e7c38"
   version = "v1.0.2"
 
 [[projects]]
+  digest = "1:256484dbbcd271f9ecebc6795b2df8cad4c458dd0f5fd82a8c2fa0c29f233411"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = ""
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:f7b541897bcde05a04a044c342ddc7425aab7e331f37b47fbb486cd16324b48e"
+  name = "github.com/stretchr/testify"
+  packages = ["assert"]
+  pruneopts = ""
+  revision = "221dbe5ed46703ee255b1da0dec05086f5035f62"
+  version = "v1.4.0"
+
+[[projects]]
   branch = "master"
+  digest = "1:21587e069fc75e280713a8556298a74a850c86c24d6ef50b8a28c518f0544ecc"
+  name = "golang.org/x/crypto"
+  packages = [
+    "bcrypt",
+    "blowfish",
+  ]
+  pruneopts = ""
+  revision = "c7e5f84aec591254278750bee18f39e5dd19cdb5"
+
+[[projects]]
+  branch = "master"
+  digest = "1:5dc6753986b9eeba4abdf05dedc5ba06bb52dad43cc8aad35ffb42bb7adfa68f"
   name = "golang.org/x/net"
   packages = ["context"]
+  pruneopts = ""
   revision = "db08ff08e8622530d9ed3a0e8ac279f6d4c02196"
 
 [[projects]]
+  digest = "1:934fb8966f303ede63aa405e2c8d7f0a427a05ea8df335dfdc1833dd4d40756f"
   name = "google.golang.org/appengine"
   packages = ["cloudsql"]
+  pruneopts = ""
   revision = "150dc57a1b433e64154302bdc40b6bb8aefa313a"
   version = "v1.0.0"
+
+[[projects]]
+  digest = "1:16c45073e621eb4261d14740daeaf985e53657ebb40b14fc56499c23e876f84a"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  pruneopts = ""
+  revision = "f90ceb4f409096b60e2e9076b38b304b8246e5fa"
+  version = "v2.2.5"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9dea555bac43e1cf229a1548f3a47177ebc4930083d84a1d08a4fa3ad4fe6cdb"
+  input-imports = [
+    "github.com/dimfeld/httptreemux",
+    "github.com/go-sql-driver/mysql",
+    "github.com/graph-gophers/dataloader",
+    "github.com/graph-gophers/graphql-go",
+    "github.com/graph-gophers/graphql-go/relay",
+    "github.com/hatena/go-Intern-Diary/config",
+    "github.com/hatena/go-Intern-Diary/model",
+    "github.com/hatena/go-Intern-Diary/repository",
+    "github.com/hatena/go-Intern-Diary/service",
+    "github.com/hatena/go-Intern-Diary/web",
+    "github.com/jessevdk/go-assets",
+    "github.com/jmoiron/sqlx",
+    "github.com/justinas/nosurf",
+    "github.com/stretchr/testify/assert",
+    "golang.org/x/crypto/bcrypt",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
