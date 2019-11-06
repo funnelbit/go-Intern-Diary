@@ -6,11 +6,13 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+
+	"github.com/hatena/go-Intern-Diary/model"
 )
 
 type Repository interface {
 	CreateNewUser(name string, passwordHash string) error
-	//FindUserById(*model.User, error)
+	FindUserByName(name string) (*model.User, error)
 	//CreateNewToken(userID uint64, token string, expiresAt time.Time) error
 	//DeleteToken(userID uint64) error
 

@@ -4,6 +4,8 @@ import (
 	"errors"
 
 	"golang.org/x/crypto/bcrypt"
+
+	"github.com/hatena/go-Intern-Diary/model"
 )
 
 func (app *diaryApp) CreateNewUser(name string, password string) (err error) {
@@ -16,4 +18,12 @@ func (app *diaryApp) CreateNewUser(name string, password string) (err error) {
 	}
 
 	return app.repo.CreateNewUser(name, string(passwordHash))
+}
+
+func (app *diaryApp) FindUserByName(name string) (*model.User, error) {
+	if name == "" {
+		return nil, errors.New("empty user name")
+	}
+
+	return app.repo.FindUserByName(name)
 }

@@ -13,4 +13,8 @@ func TestDiaryApp_CreateNewToken(t *testing.T) {
 	password := randomString() + randomString()
 	err := app.CreateNewUser(name, password)
 	assert.NoError(t, err)
+	
+	user, err := app.FindUserByName(name)
+	assert.NoError(t, err)
+	assert.NotNil(t, user)
 }
