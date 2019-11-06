@@ -26,6 +26,17 @@ func (r *repository) CreateNewUser(name string, passwordHash string) error {
 	return error
 }
 
+func (r *repository) CreateNewToken(userID uint64, token string, expiresAt time.Time) error {
+	now := time.Now()
+	_, err := r.db.Exec(
+		`INSERT INTO user_session
+			(user_id, token, expires_at, created_at, updated_at)
+			VALUES (?, ?, ?, ?, ?)`,
+			userID, token, expiresAt, now, now,
+	)
+	return err
+}
+
 func (r *repository) FindUserByName(name string) (*model.User, error) {
 	var user model.User
 	err := r.db.Get(

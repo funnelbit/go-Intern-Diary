@@ -2,6 +2,8 @@ package repository
 
 import (
 	"fmt"
+	"time"
+
 	//"../model"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -12,6 +14,7 @@ import (
 
 type Repository interface {
 	CreateNewUser(name string, passwordHash string) error
+	CreateNewToken(userID uint64, token string, expiresAt time.Time) error
 	FindUserByName(name string) (*model.User, error)
 	FindPasswordHashByName(name string) (string, error)
 	//CreateNewToken(userID uint64, token string, expiresAt time.Time) error
