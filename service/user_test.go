@@ -23,6 +23,10 @@ func TestDiaryApp_CreateNewToken(t *testing.T) {
 	token, err := app.CreateNewToken(user.ID, time.Now().Add(1*time.Hour))
 	assert.NoError(t, err)
 	assert.NotEqual(t, "", token)
+
+	u, err := app.FindUserByToken(token)
+	assert.NoError(t, err)
+	assert.Equal(t, user.ID, u.ID)
 }
 
 func TestDiaryApp_LoginUser(t *testing.T) {

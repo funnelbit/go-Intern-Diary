@@ -62,6 +62,15 @@ func (app *diaryApp) LoginUser(name string, password string) (bool, error) {
 	return true, nil
 }
 
+func (app *diaryApp) FindUserByToken(token string) (*model.User, error) {
+	if token == "" {
+		return nil, errors.New("empty user token")
+	}
+
+	user, err := app.repo.FindUserByToken(token)
+	return user, err
+}
+
 func generateToken() string {
 	table := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@"
 	l := len(table)

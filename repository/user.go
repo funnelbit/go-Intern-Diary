@@ -71,3 +71,22 @@ func (r *repository) FindPasswordHashByName(name string) (string, error) {
 
 	return hash, nil
 }
+
+func (r *repository) FindUserByToken(token string) (*model.User, error) {
+	var user model.User
+	err := r.db.Get(
+		&user,
+		`SELECT id, name FROM user JOIN user_session ON user.id = user_session.user_id
+			WHERE user_session.token = ? && user_session.expires_at > ? LIMIT 1`,
+			token, time.Now(),
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, userNotFoundError
+		}
+		return nil, err
+	}
+
+	return &user, nil
+}
