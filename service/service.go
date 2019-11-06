@@ -17,7 +17,7 @@ type DiaryApp interface {
 }
 
 func NewApp(repo repository.Repository) DiaryApp {
-	return &diaryApp{repo: repo}
+	return &diaryApp{repo}
 }
 
 type diaryApp struct {
