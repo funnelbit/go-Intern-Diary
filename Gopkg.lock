@@ -54,20 +54,6 @@
   revision = "e698b6abc17ead17ea89d3d22a4b2625299701e3"
 
 [[projects]]
-  branch = "master"
-  digest = "1:febe3e2cd92a5e2977772304d7bbc83bcd4e1ef84903633d1c1fad9c21a8be9d"
-  name = "github.com/hatena/go-Intern-Diary"
-  packages = [
-    "config",
-    "model",
-    "repository",
-    "service",
-    "web",
-  ]
-  pruneopts = ""
-  revision = "aabe08558ee4a101cf1759483d703e632b8fed18"
-
-[[projects]]
   digest = "1:860e1118ccf3d852a848b510624521344c0d4d0f35026ae2438fa96a0ec28740"
   name = "github.com/jessevdk/go-assets"
   packages = ["."]
@@ -164,11 +150,6 @@
     "github.com/graph-gophers/dataloader",
     "github.com/graph-gophers/graphql-go",
     "github.com/graph-gophers/graphql-go/relay",
-    "github.com/hatena/go-Intern-Diary/config",
-    "github.com/hatena/go-Intern-Diary/model",
-    "github.com/hatena/go-Intern-Diary/repository",
-    "github.com/hatena/go-Intern-Diary/service",
-    "github.com/hatena/go-Intern-Diary/web",
     "github.com/jessevdk/go-assets",
     "github.com/jmoiron/sqlx",
     "github.com/justinas/nosurf",
