@@ -14,10 +14,13 @@ CREATE TABLE user (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE user_session (
-  `id` BIGINT UNSIGNED NOT NULL,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `expred_at` BIGINT UNSIGNED NOT NULL,
+  `token` VARBINARY(512) NOT NULL,
 
-  PRIMARY KEY (id)
+  `expires_at` DATETIME(6) NOT NULL,
 
+  `created_at` DATETIME(6) NOT NULL,
+  `updated_at` DATETIME(6) NOT NULL,
+
+  PRIMARY KEY (token)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
