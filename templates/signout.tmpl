@@ -1,0 +1,9 @@
+{{define "title"}}ログアウト{{end}}
+
+{{define "body"}}
+<h1>ログアウト</h1>
+<form action="/signout" method="POST">
+  <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+  <input type="submit" value="ログアウト"/>
+</form>
+{{end}}

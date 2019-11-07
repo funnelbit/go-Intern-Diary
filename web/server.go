@@ -68,6 +68,9 @@ func (s *server) Handler() http.Handler {
 	handle("GET", "/signin", s.willSigninHandler())
 	handle("POST", "/signin", s.signinHandler())
 
+	handle("GET", "/signout", s.willSignoutHandler())
+	handle("POST", "/signout", s.signoutHandler())
+
 	return router
 }
 
@@ -148,6 +151,29 @@ func (s *server) signinHandler() http.Handler {
 			Name:    sessionKey,
 			Value:   token,
 			Expires: expiresAt,
+		})
+
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+}
+
+func (s *server) willSignoutHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+		s.renderTemplate(w, r, "signout.tmpl", nil)
+	})
+}
+
+func (s *server) signoutHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.SetCookie(w, &http.Cookie{
+			Name:    sessionKey,
+			Value:   "",
+			Expires: time.Unix(0, 0),
 		})
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
