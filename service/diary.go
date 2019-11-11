@@ -12,3 +12,7 @@ func (app *diaryApp) CreateNewDiary(user *model.User, name string) (*model.Diary
 	}
 	return app.repo.CreateNewDiary(user.ID, name)
 }
+
+func (app *diaryApp) FindDiariesByUserID(userID uint64) ([]*model.Diary, error) {
+	return app.repo.FindDiariesByUserID(userID)
+}

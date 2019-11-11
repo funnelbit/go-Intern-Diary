@@ -19,6 +19,7 @@ type Repository interface {
 	FindPasswordHashByName(name string) (string, error)
 	FindUserByToken(token string) (*model.User, error)
 	CreateNewDiary(userID uint64, diaryName string) (*model.Diary, error)
+	FindDiariesByUserID(userID uint64) ([]*model.Diary, error)
 	//CreateNewToken(userID uint64, token string, expiresAt time.Time) error
 	//DeleteToken(userID uint64) error
 

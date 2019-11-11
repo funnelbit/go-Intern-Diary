@@ -19,6 +19,7 @@ type DiaryApp interface {
 	CreateNewToken(userID uint64, expiresAt time.Time) (string, error)
 	FindUserByToken(token string) (*model.User, error)
 	CreateNewDiary(user *model.User, name string) (*model.Diary, error)
+	FindDiariesByUserID(userID uint64) ([]*model.Diary, error)
 	Close() error
 }
 
