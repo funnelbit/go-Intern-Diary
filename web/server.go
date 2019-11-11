@@ -71,6 +71,8 @@ func (s *server) Handler() http.Handler {
 	handle("GET", "/signout", s.willSignoutHandler())
 	handle("POST", "/signout", s.signoutHandler())
 
+	handle("GET", "/diaries", s.showDiariesHandler())
+
 	return router
 }
 
@@ -177,6 +179,31 @@ func (s *server) signoutHandler() http.Handler {
 		})
 
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
+}
+
+func (s *server) showDiariesHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+		}
+
+		diaries, err := s.app.FindDiariesByUserID(user.ID)
+		if err != nil || diaries == nil {
+			// TODO
+		}
+
+		s.renderTemplate(w, r, "diaries.tmpl", map[string]interface{}{
+			"User":    user,
+			"Diaries": diaries,
+		})
 	})
 }
 
