@@ -1,0 +1,14 @@
+{{define "title"}}日記{{end}}
+{{define "body"}}
+<h1>{{.User.Name}} の日記</h1>
+
+{{if .Error}}<h2> エラーだよ </h2>{{end}}
+<ul>
+{{range .Diaries}}
+<li>
+  <a href="">{{.Name}}</a>
+</li>
+{{end}}
+</ul>
+
+{{end}}

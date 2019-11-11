@@ -3,6 +3,7 @@ package web
 //go:generate go-assets-builder --package=web --output=./templates-gen.go --strip-prefix="/templates/" --variable=Templates ../templates
 
 import (
+	"errors"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -72,6 +73,8 @@ func (s *server) Handler() http.Handler {
 	handle("POST", "/signout", s.signoutHandler())
 
 	handle("GET", "/diaries", s.showDiariesHandler())
+	handle("GET", "/create_diary", s.willCreateDiary())
+	handle("POST", "/create_diary", s.CreateDiary())
 
 	return router
 }
@@ -196,14 +199,59 @@ func (s *server) showDiariesHandler() http.Handler {
 		}
 
 		diaries, err := s.app.FindDiariesByUserID(user.ID)
+		var el error
 		if err != nil || diaries == nil {
-			// TODO
+			el = errors.New("作品を読み込めませんでした")
 		}
 
 		s.renderTemplate(w, r, "diaries.tmpl", map[string]interface{}{
 			"User":    user,
 			"Diaries": diaries,
+			"Error":   el,
 		})
+	})
+}
+
+func (s *server) willCreateDiary() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+		}
+
+		s.renderTemplate(w, r, "new_diary.tmpl", map[string]interface{}{
+			"User": user,
+		})
+	})
+}
+
+func (s *server) CreateDiary() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+		}
+
+		name := r.FormValue("name")
+
+		diary, err := s.app.CreateNewDiary(user, name)
+		if err != nil || diary == nil {
+			http.Redirect(w, r, "/create_diary", http.StatusSeeOther)
+		}
+
+		http.Redirect(w, r, "/diaries", http.StatusSeeOther)
 	})
 }
 

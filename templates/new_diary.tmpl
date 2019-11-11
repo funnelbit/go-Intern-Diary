@@ -1,0 +1,10 @@
+{{define "title"}}ログアウト{{end}}
+
+{{define "body"}}
+<h1>{{.User.Name}} 日記の新規作成</h1>
+<form action="/create_diary" method="POST">
+  <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+  <input type="text" name="name" />
+  <input type="submit" value="新規作成" />
+</form>
+{{end}}

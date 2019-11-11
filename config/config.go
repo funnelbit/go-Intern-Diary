@@ -29,6 +29,7 @@ func Load() (*Config, error) {
 	if dbDsn == "" {
 		return nil, fmt.Errorf("Specify DATABASE_DSN")
 	}
+	dbDsn = dbDsn + "?parseTime=true"
 	config.DbDsn = dbDsn
 
 	return config, nil
