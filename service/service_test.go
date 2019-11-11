@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/hatena/go-Intern-Diary/config"
+	"github.com/hatena/go-Intern-Diary/model"
 	"github.com/hatena/go-Intern-Diary/repository"
 )
 
@@ -30,4 +31,15 @@ func closeApp(app DiaryApp) {
 
 func randomString() string {
 	return strconv.FormatInt(time.Now().Unix()^rand.Int63(), 16)
+}
+
+func createUser(app DiaryApp) *model.User {
+	name := "test name "
+	password := "a"
+	err := app.CreateNewUser(name, password)
+	user, err := app.FindUserByName(name)
+	if err != nil {
+		panic(err)
+	}
+	return user
 }

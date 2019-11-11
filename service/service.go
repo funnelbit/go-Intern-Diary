@@ -18,6 +18,7 @@ type DiaryApp interface {
 	LoginUser(name string, password string) (bool, error)
 	CreateNewToken(userID uint64, expiresAt time.Time) (string, error)
 	FindUserByToken(token string) (*model.User, error)
+	CreateNewDiary(user *model.User, name string) (*model.Diary, error)
 	Close() error
 }
 
