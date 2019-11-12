@@ -1,0 +1,13 @@
+{{define "title"}}{{.Diary.Name}}{{end}}
+{{define "body"}}
+<h1>{{.Diary.Name}}</h1>
+
+<ul>
+{{range .Articles}}
+<li>
+  <a href="">{{.Name}}</a>
+</li>
+{{end}}
+</ul>
+
+{{end}}

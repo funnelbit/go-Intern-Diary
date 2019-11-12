@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/dimfeld/httptreemux"
@@ -75,6 +76,8 @@ func (s *server) Handler() http.Handler {
 	handle("GET", "/diaries", s.showDiariesHandler())
 	handle("GET", "/create_diary", s.willCreateDiary())
 	handle("POST", "/create_diary", s.CreateDiary())
+
+	handle("GET", "/diary/:id", s.showDiaryHandler())
 
 	return router
 }
@@ -196,6 +199,7 @@ func (s *server) showDiariesHandler() http.Handler {
 		user, err := s.app.FindUserByToken(cookie.Value)
 		if err != nil || user == nil {
 			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
 		}
 
 		diaries, err := s.app.FindDiariesByUserID(user.ID)
@@ -255,6 +259,37 @@ func (s *server) CreateDiary() http.Handler {
 	})
 }
 
+func (s *server) showDiaryHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+		}
+
+		diaryID, err := strconv.ParseUint(s.getParams(r, "id"), 10, 64)
+		if err != nil {
+			http.Error(w, "invalid entry id", http.StatusBadRequest)
+			return
+		}
+
+		diary, err := s.app.FindDiaryByID(diaryID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+
+		s.renderTemplate(w, r, "diary.tmpl", map[string]interface{}{
+			"Diary":    diary,
+			"Articles": []string{},
+		})
+	})
+}
+
 func (s *server) renderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, data map[string]interface{}) {
 	if data == nil {
 		data = make(map[string]interface{})
@@ -264,4 +299,8 @@ func (s *server) renderTemplate(w http.ResponseWriter, r *http.Request, tmpl str
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func (s *server) getParams(r *http.Request, name string) string {
+	return httptreemux.ContextParams(r.Context())[name]
 }
