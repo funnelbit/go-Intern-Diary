@@ -9,6 +9,8 @@ import (
 	"github.com/hatena/go-Intern-Diary/model"
 )
 
+var diaryNotFoundError = model.NotFoundError("diary")
+
 func (r *repository) CreateNewDiary(userID uint64, diaryName string) (*model.Diary, error) {
 	id, err := r.generateID()
 	if err != nil {
@@ -46,3 +48,21 @@ func (r *repository) FindDiariesByUserID(userID uint64) ([]*model.Diary, error) 
 
 	return diaries, err
 }
+
+func (r *repository) FindDiaryByID(diaryID uint64) (*model.Diary, error) {
+	var diary model.Diary
+	err := r.db.Get(
+		&diary,
+		`SELECT * FROM diary WHERE id = ? LIMIT 1`,
+		diaryID,
+	)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, diaryNotFoundError
+		}
+		return nil, err
+	}
+
+	return &diary, nil
+} 

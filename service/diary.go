@@ -16,3 +16,10 @@ func (app *diaryApp) CreateNewDiary(user *model.User, name string) (*model.Diary
 func (app *diaryApp) FindDiariesByUserID(userID uint64) ([]*model.Diary, error) {
 	return app.repo.FindDiariesByUserID(userID)
 }
+
+func (app *diaryApp) FindDiaryByID(diaryID uint64) (*model.Diary, error) {
+	if diaryID == 0 {
+		return nil, errors.New("empty diary id")
+	}
+	return app.repo.FindDiaryByID(diaryID)
+}

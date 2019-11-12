@@ -44,10 +44,10 @@ func createUser(app DiaryApp) *model.User {
 	return user
 }
 
-func createDiary(app DiaryApp, user *model.User, diaryName: string) {
+func createDiary(app DiaryApp, user *model.User, diaryName string) *model.Diary {
 	diary, err := app.CreateNewDiary(user, diaryName)
 	if err != nil {
 		panic(err)
 	}
-	return diaryName
+	return diary
 }
