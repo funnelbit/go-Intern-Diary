@@ -79,6 +79,9 @@ func (s *server) Handler() http.Handler {
 
 	handle("GET", "/diary/:id", s.showDiaryHandler())
 
+	handle("GET", "/diary/:id/create_article", s.willCreateArticleHandler())
+	handle("POST", "/diary/:id/create_article", s.CreateArticleHandler())
+
 	return router
 }
 
@@ -282,11 +285,76 @@ func (s *server) showDiaryHandler() http.Handler {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 		}
+		articles, err := s.app.FindArticlesByDiaryID(diaryID)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
 
 		s.renderTemplate(w, r, "diary.tmpl", map[string]interface{}{
 			"Diary":    diary,
-			"Articles": []string{},
+			"Articles": articles,
 		})
+	})
+}
+
+func (s *server) willCreateArticleHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+		}
+
+		diaryID, err := strconv.ParseUint(s.getParams(r, "id"), 10, 64)
+		diary, err := s.app.FindDiaryByID(diaryID)
+		if err != nil || diary == nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+		}
+
+		s.renderTemplate(w, r, "new_article.tmpl", map[string]interface{}{
+			"Diary": diary,
+		})
+	})
+}
+
+func (s *server) CreateArticleHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		cookie, err := r.Cookie(sessionKey)
+		if err != nil || cookie == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		user, err := s.app.FindUserByToken(cookie.Value)
+		if err != nil || user == nil {
+			http.Redirect(w, r, "/signin", http.StatusSeeOther)
+			return
+		}
+
+		formValueDiaryID, body := r.FormValue("diary_id"), r.FormValue("body")
+		if formValueDiaryID == "" || body == "" {
+			http.Error(w, errors.New("empty").Error(), http.StatusBadRequest)
+			return
+		}
+
+		diaryID, err := strconv.ParseUint(formValueDiaryID, 10, 64)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		diary, err := s.app.FindDiaryByID(diaryID)
+		if err != nil || diary == nil {
+			http.Error(w, errors.New("diary not found").Error(), http.StatusBadRequest)
+			return
+		}
+
+		s.app.CreateNewArticle(diaryID, body)
+		http.Redirect(w, r, "/diary/"+formValueDiaryID, http.StatusSeeOther)
 	})
 }
 

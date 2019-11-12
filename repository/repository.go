@@ -21,8 +21,9 @@ type Repository interface {
 	CreateNewDiary(userID uint64, diaryName string) (*model.Diary, error)
 	FindDiariesByUserID(userID uint64) ([]*model.Diary, error)
 	FindDiaryByID(diaryID uint64) (*model.Diary, error)
-	//CreateNewToken(userID uint64, token string, expiresAt time.Time) error
-	//DeleteToken(userID uint64) error
+	CreateNewArticle(diaryID uint64, body string) (*model.Article, error)
+	FindArticlesByDiaryID(diaryID uint64) ([]*model.Article, error)
+	FindArticleByID(articleID uint64) (*model.Article, error)
 
 	Close() error
 }

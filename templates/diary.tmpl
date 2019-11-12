@@ -1,11 +1,11 @@
 {{define "title"}}{{.Diary.Name}}{{end}}
 {{define "body"}}
 <h1>{{.Diary.Name}}</h1>
-
+<a href="/diary/{{.Diary.ID}}/create_article">+</a>
 <ul>
 {{range .Articles}}
 <li>
-  <a href="">{{.Name}}</a>
+  <div>{{.Body}}</div>
 </li>
 {{end}}
 </ul>
